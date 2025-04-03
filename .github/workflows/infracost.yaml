@@ -1,4 +1,4 @@
-iname: Infracost PR cost estimate
+name: Infracost PR cost estimate
 
 on:
   pull_request:
