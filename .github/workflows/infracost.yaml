@@ -1,0 +1,36 @@
+iname: Infracost PR cost estimate
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+  push:
+    branches:
+      - main
+
+jobs:
+  infracost-pull-request-checks:
+    name: Infracost Pull Request Checks
+    if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Infracost
+        uses: infracost/actions/setup@v3
+        with:
+          api-key: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Generate cost estimate diff
+        run: |
+          infracost diff \
+            --path . \
+            --format github-comment \
+            --show-skipped \
+            --repo-url ${{ github.repository }} \
+            --pull-request ${{ github.event.pull_request.number }} \
+            --log-level info
