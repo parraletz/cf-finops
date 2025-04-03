@@ -10,16 +10,17 @@ provider "aws" {
   region = "us-east-1"
 
   default_tags {
-       tags = {
-         Environment = "Production"
-         Project = "Infracost"
-       }
+    tags = {
+      Environment = "Production"
+      Project     = "Infracost"
+    }
   }
 }
 
 resource "aws_instance" "cfinstance" {
   ami           = "ami-00a929b66ed6e0de6"
-  instance_type = "t3.micro"
+  count         = 1
+  instance_type = "t3.medium"
 
   tags = {
     Name = "CFInstance"
