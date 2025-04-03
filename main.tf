@@ -8,6 +8,13 @@ terraform {
 }
 provider "aws" {
   region = "us-east-1"
+
+  default_tags {
+       tags = {
+         Environment = "Production"
+         Project = "Infracost"
+       }
+  }
 }
 
 resource "aws_instance" "cfinstance" {

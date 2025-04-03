@@ -16,8 +16,6 @@ jobs:
       contents: read
       pull-requests: write
 
-
-
     steps:
       - name: Setup Infracost
         uses: infracost/actions/setup@v3
