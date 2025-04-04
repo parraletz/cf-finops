@@ -19,8 +19,8 @@ provider "aws" {
 
 resource "aws_instance" "cfinstance" {
   ami           = "ami-00a929b66ed6e0de6"
-  count         = 1
-  instance_type = "t3.medium"
+  count         = 3
+  instance_type = "c5.large"
 
   tags = {
     Name = "CFInstance"
@@ -29,7 +29,8 @@ resource "aws_instance" "cfinstance" {
 
 resource "aws_ebs_volume" "data_volumen" {
   availability_zone = "us-east-1a"
-  size              = 32
+  size              = 50
+  type = "gp3"
   tags = {
     Name = "DataVolume"
   }
